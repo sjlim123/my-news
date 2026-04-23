@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 게임 & 프론트엔드 매거진</title>
+    <style>
+        /* 1. 기본 설정 및 테마 변수 */
+        :root {
+            --bg-color: #f4f4f0;
+            --text-color: #222;
+            --point-color: #e11d48;
+            --border-color: #333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', 'Georgia', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+        }
+
+        /* [실습 1] CSS Grid 메인 레이아웃 만들기 */
+        .magazine-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            border: 4px solid var(--border-color);
+            padding: 20px;
+
+            /* TODO 1 */
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            background: #fffdf8;
+        }
+
+        header {
+            /* TODO 2 */
+            grid-column: 1 / -1;
+
+            text-align: center;
+            border-bottom: 4px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+        }
+
+        aside { padding: 10px; }
+
+        main {
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            padding: 0 20px;
+        }
+
+        /* [실습 2] 내부 기사 카드 Grid 배열 */
+        .article-grid {
+            /* TODO 3 */
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* 기사 카드 스타일 및 Transition (마우스 오버 효과) */
+        .magic-card {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 15px;
+            overflow: hidden;
+
+            /* TODO 4 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
+        }
+
+        .magic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .magic-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* [실습 3] @keyframes 애니메이션 만들기 */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: var(--border-color);
+            color: #fff;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        .ticker-move {
+            display: inline-block;
+            white-space: nowrap;
+
+            /* TODO 5 */
+            animation: slide-left 10s linear infinite;
+        }
+
+        /* 텍스트가 흘러가는 애니메이션 */
+        @keyframes slide-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* NEW 뱃지 애니메이션 */
+        .badge-new {
+            display: inline-block;
+            background: var(--point-color);
+            color: white;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            border-radius: 12px;
+            margin-bottom: 10px;
+
+            /* TODO 6 */
+            animation: floating-badge 1.5s ease-in-out infinite;
+        }
+
+        @keyframes floating-badge {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-6px); opacity: 0.7; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* 반응형 모바일 설정 */
+        @media (max-width: 800px) {
+            .magazine-layout { grid-template-columns: 1fr; }
+            header { grid-column: 1; }
+            main { border: none; padding: 0; margin: 20px 0; }
+            .article-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="magazine-layout">
+        <header>
+            <h1>나의 게임 & 프론트엔드 매거진</h1>
+            <p>Vol. 1 | 2026. 04. 23 | 임성진</p>
+        </header>
+
+        <!-- 흘러가는 속보 -->
+        <div class="ticker-wrap" style="grid-column: 1 / -1;">
+            <div class="ticker-move">
+                🔥 [속보] CSS Grid 완전 정복! · 카드 레이아웃 2단 구성 성공 · Animation으로 움직이는 매거진 완성 · 모바일 1단 반응형까지 적용 완료 🔥
+            </div>
+        </div>
+
+        <aside>
+            <h2 style="border-bottom: 2px solid var(--point-color); margin-bottom: 15px;">Profile</h2>
+            <div style="background: #fff; padding: 15px; border: 1px solid #ddd;">
+                <h4>편집장의 말</h4>
+                <p style="font-size: 0.9rem; color: #666; line-height: 1.6;">
+                    이번 과제에서는 CSS Grid와 Animation을 활용해
+                    나만의 매거진 페이지를 제작했습니다.
+                    프론트엔드라는 주제를 연결해,
+                    보기 좋은 레이아웃과 동적인 효과를 함께 담아보았습니다.
+                </p>
+            </div>
+        </aside>
+
+        <main>
+            <div class="article-grid">
+                <!-- 기사 카드 1 -->
+                <article class="magic-card">
+                    <span class="badge-new">NEW</span>
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&fit=crop" alt="코딩 이미지">
+                    <h3 style="font-size: 1.1rem; margin: 10px 0;">CSS Grid로 만드는 깔끔한 구조</h3>
+                    <p style="font-size: 0.9rem; color: #555; line-height: 1.5;">
+                        Grid를 사용하면 웹 페이지를 행과 열 기준으로 나눌 수 있어
+                        복잡한 레이아웃도 훨씬 쉽게 구성할 수 있습니다.
+                        <br>이번 매거진의 전체 구조도 3단 Grid로 배치했습니다.
+                        grid 사용에 있어서 교수님이 주신 연습 사이트가 도움이 되었습니다.
+                        매거진 독자 여러분들도 grid garden을 이용해 배워보세요!
+                    </p>
+                </article>
+
+                <!-- 기사 카드 2 -->
+                <article class="magic-card">
+                    <span class="badge-new" style="background:#3b82f6;">HOT</span>
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=500&fit=crop" alt="게임 이미지">
+                    <h3 style="font-size: 1.1rem; margin: 10px 0;">게임처럼 생동감 있는 웹페이지</h3>
+                    <p style="font-size: 0.9rem; color: #555; line-height: 1.5;">
+                        웹페이지도 게임처럼 시선을 끄는 요소가 중요합니다.
+                        상단 속보 텍스트에는 흐르는 효과를, 기사 뱃지에는
+                        둥둥 떠오르는 애니메이션을 넣어 더 생동감 있게 만들었습니다.
+                        <br>나중에 배움을 더 쌓아서 다양한 애니메이션을 사용해보는 시간도 가져보고 싶습니다.
+                    </p>
+                </article>
+
+                <!-- 기사 카드 3 -->
+                <article class="magic-card">
+                    <span class="badge-new" style="background:#16a34a;">TIP</span>
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&fit=crop" alt="공부 이미지">
+                    <h3 style="font-size: 1.1rem; margin: 10px 0;">반응형 웹의 중요성</h3>
+                    <p style="font-size: 0.9rem; color: #555; line-height: 1.5;">
+                        PC 화면에서는 다단 레이아웃으로 보이지만,
+                        모바일처럼 화면이 좁아지면 1단으로 바뀌어야 읽기 편합니다.
+                        <br>그래서 media query를 사용해 반응형 구조도 함께 구현했습니다.
+                        처음 이코드를 작성할때 이해가 안갔지만 결국 성공했습니다.
+                    </p>
+                </article>
+
+                <!-- 기사 카드 4 -->
+                <article class="magic-card">
+                    <span class="badge-new" style="background:#f59e0b;">BEST</span>
+                    <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=500&fit=crop" alt="개발 이미지">
+                    <h3 style="font-size: 1.1rem; margin: 10px 0;">CSS 변수로 디자인 관리하기</h3>
+                    <p style="font-size: 0.9rem; color: #555; line-height: 1.5;">
+                        색상 값을 변수로 정리하면 전체 테마를 쉽게 바꿀 수 있습니다.
+                        배경색, 강조색, 테두리색을 var로 관리해 코드의 통일성을 좋게 만들어보았습니다.
+                        <br>계속해서 나오는 다양한 기사 썸네일은 교수님께서 사용하신 Unsplash.com 사이트에서 마음에 드는 사진을 골라 적용해보았습니다.
+                    </p>
+                </article>
+            </div>
+        </main>
+
+        <aside>
+            <h2 style="border-bottom: 2px solid var(--point-color); margin-bottom: 15px;">Ad</h2>
+            <div style="background: #333; color: #fff; height: 250px; display: flex; align-items: center; justify-content: center; text-align: center;">
+                <p>배너 광고<br>나만의 매거진 특집</p>
+            </div>
+        </aside>
+    </div>
+
+</body>
+</html>
+<!--나중에 다시 이파일을 열었다면 배너 광고 안에 특정 광고 사진을 넣어볼것-->
